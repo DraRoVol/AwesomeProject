@@ -15,20 +15,27 @@ const RegistrationScreen = () => {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [containerStyle, setContainerStyle] = useState(styles.container);
-  const [inputBorderColor, setInputBorderColor] = useState("#E8E8E8");
+  const [inputBorderColor, setInputBorderColor] = useState({
+    login: "#E8E8E8",
+    email: "#E8E8E8",
+    password: "#E8E8E8",
+  });
 
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
   };
-  // Set the desired border color
-  const handleInputFocus = () => {
+  const handleInputFocus = (inputName) => {
     setContainerStyle({ ...styles.container, top: "20%" });
-    setInputBorderColor("#FF6C00");
+    setInputBorderColor((prevState) => {
+      return { ...prevState, [inputName]: "#FF6C00" };
+    });
   };
-  // Reset the border color on blur
-  const handleInputBlur = () => {
+
+  const handleInputBlur = (inputName) => {
     setContainerStyle({ ...styles.container, top: "33%" });
-    setInputBorderColor("#E8E8E8");
+    setInputBorderColor((prevState) => {
+      return { ...prevState, [inputName]: "#E8E8E8" };
+    });
   };
 
   return (
@@ -40,10 +47,7 @@ const RegistrationScreen = () => {
         <View>
           <Image style={styles.post} />
           <View style={styles.addButtonContainer}>
-            <TouchableOpacity
-              style={styles.addButton}
-              onPress={() => {}}
-            >
+            <TouchableOpacity style={styles.addButton} onPress={() => {}}>
               <Text style={styles.addButtonTitle}>+</Text>
             </TouchableOpacity>
           </View>
@@ -52,24 +56,24 @@ const RegistrationScreen = () => {
         <View style={styles.listInput}>
           <TextInput
             placeholder="Логін"
-            style={[styles.input, { borderColor: inputBorderColor }]}
-            onFocus={handleInputFocus}
-            onBlur={handleInputBlur}
+            style={[styles.input, { borderColor: inputBorderColor.login }]}
+            onFocus={() => handleInputFocus("login")}
+            onBlur={() => handleInputBlur("login")}
           />
           <TextInput
             placeholder="Адреса електронної пошти"
-            style={[styles.input, { borderColor: inputBorderColor }]}
-            onFocus={handleInputFocus}
-            onBlur={handleInputBlur}
+            style={[styles.input, { borderColor: inputBorderColor.email }]}
+            onFocus={() => handleInputFocus("email")}
+            onBlur={() => handleInputBlur("email")}
           />
           <TextInput
             value={password}
             secureTextEntry={!showPassword}
             placeholder="Пароль"
-            style={[styles.input, { borderColor: inputBorderColor }]}
+            style={[styles.input, { borderColor: inputBorderColor.password }]}
             onChangeText={setPassword}
-            onFocus={handleInputFocus}
-            onBlur={handleInputBlur}
+            onFocus={() => handleInputFocus("password")}
+            onBlur={() => handleInputBlur("password")}
           />
           <TouchableOpacity
             onPress={toggleShowPassword}
