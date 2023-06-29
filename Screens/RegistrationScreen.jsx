@@ -24,6 +24,7 @@ const RegistrationScreen = () => {
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
   };
+
   const handleInputFocus = (inputName) => {
     setContainerStyle({ ...styles.container, top: "20%" });
     setInputBorderColor((prevState) => {
@@ -85,7 +86,9 @@ const RegistrationScreen = () => {
           </TouchableOpacity>
         </View>
         <View style={styles.btn}>
-          <Button title="Зареєстуватися" color="#fff" />
+          <TouchableOpacity onPress={() => {}} style={styles.buttonContainer}>
+            <Text style={styles.buttonText}>Зареєстуватися</Text>
+          </TouchableOpacity>
         </View>
         <Text style={styles.text}>Вже є акаунт? Увійти</Text>
       </View>
@@ -154,13 +157,20 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderStyle: "solid",
   },
-  btn: {
+  buttonContainer: {
     width: 343,
-    height: 51,
-    padding: 7,
+    height: 50,
     marginTop: 30,
     backgroundColor: "#FF6C00",
-    borderRadius: 50,
+    borderRadius: 8,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+
+  buttonText: {
+    color: "#FFFFFF",
+    fontSize: 16,
+    fontWeight: "bold",
   },
   text: {
     paddingTop: 16,

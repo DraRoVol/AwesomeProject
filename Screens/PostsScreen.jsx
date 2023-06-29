@@ -2,7 +2,7 @@ import RegistrationScreen from "./RegistrationScreen";
 import LoginScreen from "./LoginScreen";
 
 const PostsScreen = () => {
-  const showRegistration = true;
+  const showRegistration = false;
   return (
      <>
       {showRegistration ? (

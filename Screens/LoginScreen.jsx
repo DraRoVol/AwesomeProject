@@ -70,7 +70,9 @@ const LoginScreen = () => {
           </TouchableOpacity>
         </View>
         <View style={styles.btn}>
-          <Button title="Увійти" color="#fff" />
+          <TouchableOpacity onPress={() => {}} style={styles.buttonContainer}>
+            <Text style={styles.buttonText}>Увійти</Text>
+          </TouchableOpacity>
         </View>
         <Text style={styles.text}>
           Немає акаунту?{" "}
@@ -118,13 +120,20 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderStyle: "solid",
   },
-  btn: {
+  buttonContainer: {
     width: 343,
-    height: 51,
-    padding: 7,
+    height: 50,
     marginTop: 30,
     backgroundColor: "#FF6C00",
-    borderRadius: 50,
+    borderRadius: 8,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+
+  buttonText: {
+    color: "#FFFFFF",
+    fontSize: 16,
+    fontWeight: "bold",
   },
   text: {
     paddingTop: 16,
