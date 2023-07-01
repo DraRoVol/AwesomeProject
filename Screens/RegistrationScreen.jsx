@@ -10,9 +10,10 @@ import {
   KeyboardAvoidingView,
   Platform,
   TouchableOpacity,
+  ImageBackground,
 } from "react-native";
 
-const RegistrationScreen = () => {
+const RegistrationScreen = ({ navigation }) => {
   const [login, setLogin] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -24,10 +25,6 @@ const RegistrationScreen = () => {
     password: "#E8E8E8",
   });
   const [imageVisible, setImageVisible] = useState(false);
-
-  const onLogin = () => {
-    console.log(`${login} + ${email} + ${password}`);
-  };
 
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
@@ -49,86 +46,105 @@ const RegistrationScreen = () => {
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <KeyboardAvoidingView
-        style={containerStyle}
-        behavior={Platform.OS === "ios" ? "padding" : null}
+      <ImageBackground
+        source={require("../assets/photo.png")}
+        style={{ width: "100%", height: "100%" }}
       >
-        <View style={styles.list}>
-          <View>
-            {!imageVisible ? (
-              <Image style={styles.post} source={require("../assets/grey.png")} />
-            ) : (
-              <Image
-                style={styles.post}
-                source={require("../assets/face.png")}
-              />
-            )}
-            <View style={styles.addButtonContainer}>
-              {imageVisible ? (
-                <TouchableOpacity
-                  style={styles.outButton}
-                  onPress={() => {
-                    setImageVisible(false);
-                  }}
-                >
-                  <Text style={styles.outButtonTitle}>×</Text>
-                </TouchableOpacity>
+        <KeyboardAvoidingView
+          style={containerStyle}
+          behavior={Platform.OS === "ios" ? "padding" : null}
+        >
+          <View style={styles.list}>
+            <View>
+              {!imageVisible ? (
+                <Image
+                  style={styles.post}
+                  source={require("../assets/grey.png")}
+                />
               ) : (
-                <TouchableOpacity
-                  style={styles.addButton}
-                  onPress={() => {
-                    setImageVisible(true);
-                  }}
-                >
-                  <Text style={styles.addButtonTitle}>+</Text>
-                </TouchableOpacity>
+                <Image
+                  style={styles.post}
+                  source={require("../assets/face.png")}
+                />
               )}
+              <View style={styles.addButtonContainer}>
+                {imageVisible ? (
+                  <TouchableOpacity
+                    style={styles.outButton}
+                    onPress={() => {
+                      setImageVisible(false);
+                    }}
+                  >
+                    <Text style={styles.outButtonTitle}>×</Text>
+                  </TouchableOpacity>
+                ) : (
+                  <TouchableOpacity
+                    style={styles.addButton}
+                    onPress={() => {
+                      setImageVisible(true);
+                    }}
+                  >
+                    <Text style={styles.addButtonTitle}>+</Text>
+                  </TouchableOpacity>
+                )}
+              </View>
+            </View>
+            <Text style={styles.title}>Реєстрація</Text>
+            <View style={styles.listInput}>
+              <TextInput
+                value={login}
+                placeholder="Логін"
+                style={[styles.input, { borderColor: inputBorderColor.login }]}
+                onChangeText={setLogin}
+                onFocus={() => handleInputFocus("login")}
+                onBlur={() => handleInputBlur("login")}
+              />
+              <TextInput
+                value={email}
+                placeholder="Адреса електронної пошти"
+                style={[styles.input, { borderColor: inputBorderColor.email }]}
+                onChangeText={setEmail}
+                onFocus={() => handleInputFocus("email")}
+                onBlur={() => handleInputBlur("email")}
+              />
+              <TextInput
+                value={password}
+                secureTextEntry={!showPassword}
+                placeholder="Пароль"
+                style={[
+                  styles.input,
+                  { borderColor: inputBorderColor.password },
+                ]}
+                onChangeText={setPassword}
+                onFocus={() => handleInputFocus("password")}
+                onBlur={() => handleInputBlur("password")}
+              />
+              <TouchableOpacity
+                onPress={toggleShowPassword}
+                style={styles.showPasswordButton}
+              >
+                <Text style={styles.showPasswordButtonText}>
+                  {showPassword ? "Приховати" : "Показати"}
+                </Text>
+              </TouchableOpacity>
+            </View>
+            <View style={styles.btn}>
+              <TouchableOpacity
+                style={styles.buttonContainer}
+                onPress={() => navigation.navigate("Posts")}
+              >
+                <Text style={styles.buttonText}>Зареєстуватися</Text>
+              </TouchableOpacity>
+            </View>
+            <View style={styles.navigation}>
+              <Text style={styles.text}>Вже є акаунт?</Text>
+              <TouchableOpacity onPress={() => navigation.navigate("Login")}>
+                <Text style={styles.buttonNavigation}>Увійти</Text>
+              </TouchableOpacity>
             </View>
           </View>
-          <Text style={styles.title}>Реєстрація</Text>
-          <View style={styles.listInput}>
-            <TextInput
-              value={login}
-              placeholder="Логін"
-              style={[styles.input, { borderColor: inputBorderColor.login }]}
-              onChangeText={setLogin}
-              onFocus={() => handleInputFocus("login")}
-              onBlur={() => handleInputBlur("login")}
-            />
-            <TextInput
-              value={email}
-              placeholder="Адреса електронної пошти"
-              style={[styles.input, { borderColor: inputBorderColor.email }]}
-              onChangeText={setEmail}
-              onFocus={() => handleInputFocus("email")}
-              onBlur={() => handleInputBlur("email")}
-            />
-            <TextInput
-              value={password}
-              secureTextEntry={!showPassword}
-              placeholder="Пароль"
-              style={[styles.input, { borderColor: inputBorderColor.password }]}
-              onChangeText={setPassword}
-              onFocus={() => handleInputFocus("password")}
-              onBlur={() => handleInputBlur("password")}
-            />
-            <TouchableOpacity
-              onPress={toggleShowPassword}
-              style={styles.showPasswordButton}
-            >
-              <Text style={styles.showPasswordButtonText}>
-                {showPassword ? "Приховати" : "Показати"}
-              </Text>
-            </TouchableOpacity>
-          </View>
-          <View style={styles.btn}>
-            <TouchableOpacity onPress={onLogin} style={styles.buttonContainer}>
-              <Text style={styles.buttonText}>Зареєстуватися</Text>
-            </TouchableOpacity>
-          </View>
-          <Text style={styles.text}>Вже є акаунт? Увійти</Text>
-        </View>
-      </KeyboardAvoidingView>
+        </KeyboardAvoidingView>
+      </ImageBackground>
     </TouchableWithoutFeedback>
   );
 };
@@ -227,11 +243,20 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "bold",
   },
-  text: {
+  navigation: {
+    flexDirection: "row",
+    alignItems: "center",
     paddingTop: 16,
-    fontWeight: 400,
+  },
+  text: {
     fontSize: 16,
-    lineHeight: 19,
+    fontWeight: 400,
+    color: "#1B4371",
+    paddingRight: 4,
+  },
+  buttonNavigation: {
+    fontSize: 16,
+    fontWeight: 400,
     color: "#1B4371",
   },
   showPasswordButton: {

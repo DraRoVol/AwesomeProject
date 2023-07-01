@@ -9,10 +9,11 @@ import {
   KeyboardAvoidingView,
   Platform,
   TouchableOpacity,
+  ImageBackground,
 } from "react-native";
 
-const LoginScreen = () => {
-  const [email, setEmail] = useState('');
+const LoginScreen = ({ navigation }) => {
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [containerStyle, setContainerStyle] = useState(styles.container);
@@ -20,10 +21,6 @@ const LoginScreen = () => {
     email: "#E8E8E8",
     password: "#E8E8E8",
   });
-
-  const onLogin = () => {
-    console.log(`${email} + ${password}`)
-  };
 
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
@@ -45,50 +42,65 @@ const LoginScreen = () => {
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <KeyboardAvoidingView
-        style={containerStyle}
-        behavior={Platform.OS === "ios" ? "padding" : null}
+      <ImageBackground
+        source={require("../assets/photo.png")}
+        style={{ width: "100%", height: "100%" }}
       >
-        <View style={styles.list}>
-          <Text style={styles.title}>Увійти</Text>
-          <View style={styles.listInput}>
-            <TextInput
-              value={email}
-              placeholder="Адреса електронної пошти"
-              style={[styles.input, { borderColor: inputBorderColor.email }]}
-              onChangeText={setEmail}
-              onFocus={() => handleInputFocus("email")}
-              onBlur={() => handleInputBlur("email")}
-            />
-            <TextInput
-              value={password}
-              secureTextEntry={!showPassword}
-              placeholder="Пароль"
-              style={[styles.input, { borderColor: inputBorderColor.password }]}
-              onChangeText={setPassword}
-              onFocus={() => handleInputFocus("password")}
-              onBlur={() => handleInputBlur("password")}
-            />
-            <TouchableOpacity
-              onPress={toggleShowPassword}
-              style={styles.showPasswordButton}
-            >
-              <Text style={styles.showPasswordButtonText}>
-                {showPassword ? "Приховати" : "Показати"}
-              </Text>
-            </TouchableOpacity>
+        <KeyboardAvoidingView
+          style={containerStyle}
+          behavior={Platform.OS === "ios" ? "padding" : null}
+        >
+          <View style={styles.list}>
+            <Text style={styles.title}>Увійти</Text>
+            <View style={styles.listInput}>
+              <TextInput
+                value={email}
+                placeholder="Адреса електронної пошти"
+                style={[styles.input, { borderColor: inputBorderColor.email }]}
+                onChangeText={setEmail}
+                onFocus={() => handleInputFocus("email")}
+                onBlur={() => handleInputBlur("email")}
+              />
+              <TextInput
+                value={password}
+                secureTextEntry={!showPassword}
+                placeholder="Пароль"
+                style={[
+                  styles.input,
+                  { borderColor: inputBorderColor.password },
+                ]}
+                onChangeText={setPassword}
+                onFocus={() => handleInputFocus("password")}
+                onBlur={() => handleInputBlur("password")}
+              />
+              <TouchableOpacity
+                onPress={toggleShowPassword}
+                style={styles.showPasswordButton}
+              >
+                <Text style={styles.showPasswordButtonText}>
+                  {showPassword ? "Приховати" : "Показати"}
+                </Text>
+              </TouchableOpacity>
+            </View>
+            <View style={styles.btn}>
+              <TouchableOpacity
+                style={styles.buttonContainer}
+                onPress={() => navigation.navigate("Posts")}
+              >
+                <Text style={styles.buttonText}>Увійти</Text>
+              </TouchableOpacity>
+            </View>
+            <View style={styles.navigation}>
+              <Text style={styles.text}>Немає акаунту?</Text>
+              <TouchableOpacity
+                onPress={() => navigation.navigate("Registration")}
+              >
+                <Text style={styles.buttonNavigation}>Зареєструватися</Text>
+              </TouchableOpacity>
+            </View>
           </View>
-          <View style={styles.btn}>
-            <TouchableOpacity onPress={onLogin} style={styles.buttonContainer}>
-              <Text style={styles.buttonText}>Увійти</Text>
-            </TouchableOpacity>
-          </View>
-          <Text style={styles.text}>
-            Немає акаунту?{" "}
-            <Text style={styles.underlineText}>Зареєструватися</Text>
-          </Text>
-        </View>
-      </KeyboardAvoidingView>
+        </KeyboardAvoidingView>
+      </ImageBackground>
     </TouchableWithoutFeedback>
   );
 };
@@ -96,7 +108,7 @@ const LoginScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    top: "33%",
+    top: "40%",
     backgroundColor: "#FFF",
     borderTopLeftRadius: 25,
     borderTopRightRadius: 25,
@@ -145,14 +157,21 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "bold",
   },
-  text: {
+  navigation: {
+    flexDirection: "row",
+    alignItems: "center",
     paddingTop: 16,
-    fontWeight: 400,
-    fontSize: 16,
-    lineHeight: 19,
-    color: "#1B4371",
   },
-  underlineText: {
+  text: {
+    fontSize: 16,
+    fontWeight: 400,
+    color: "#1B4371",
+    paddingRight: 4,
+  },
+  buttonNavigation: {
+    fontSize: 16,
+    fontWeight: 400,
+    color: "#1B4371",
     textDecorationLine: "underline",
   },
   showPasswordButton: {
