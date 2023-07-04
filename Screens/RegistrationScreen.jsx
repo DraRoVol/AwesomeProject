@@ -131,7 +131,7 @@ const RegistrationScreen = ({ navigation }) => {
             <View style={styles.btn}>
               <TouchableOpacity
                 style={styles.buttonContainer}
-                onPress={() => navigation.navigate("Posts")}
+                onPress={() => navigation.navigate("Home")}
               >
                 <Text style={styles.buttonText}>Зареєстуватися</Text>
               </TouchableOpacity>
@@ -233,7 +233,7 @@ const styles = StyleSheet.create({
     height: 50,
     marginTop: 30,
     backgroundColor: "#FF6C00",
-    borderRadius: 8,
+    borderRadius: 25,
     justifyContent: "center",
     alignItems: "center",
   },

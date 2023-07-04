@@ -1,6 +1,8 @@
+import { Text } from "react-native";
+
 const MapScreen = () => {
   return (
-    <div>MapScreen</div>
+    <Text>MapScreen</Text>
   )
 }
 
